@@ -139,7 +139,7 @@ const command: GluegunCommand = {
 
     print.info('Starting parsing OpenAPI...')
 
-    const document = await SwaggerParser.parse(path)
+    const document = await SwaggerParser.dereference(path)
 
     console.log(document)
   },
