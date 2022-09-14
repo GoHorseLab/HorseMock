@@ -79,7 +79,7 @@ describe('[Function] ParseNumberSchema', () => {
       },
       {
         type: 'string',
-        example: 0,
+        example: 'test',
       },
       {
         type: 'boolean',
