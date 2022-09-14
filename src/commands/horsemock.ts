@@ -20,7 +20,7 @@ const command: GluegunCommand = {
     console.log(print.colors.bgBlack('For run the OpenAPI mock command: '))
     console.log(
       print.colors.white(
-        'horsemock swagger --port=8080 --path=$PWD/YOUR_PATH/YOUR_OPENAPI.{json,yaml}'
+        'horsemock swagger --port 8080 --path $PWD/YOUR_PATH/YOUR_OPENAPI.{json,yaml}'
       )
     )
 
