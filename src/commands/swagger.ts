@@ -7,9 +7,13 @@ import {
 
 import * as SwaggerParser from '@apidevtools/swagger-parser'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const toBoolean = require('to-boolean')
+
 type SwaggerOptions = {
   port: number
   path: string
+  validateSchema: boolean
 }
 
 type IncomingSwaggerOptions = Partial<SwaggerOptions>
@@ -53,6 +57,10 @@ async function getOptions(
   if (!options?.path) {
     options.path = await getPathOption(prompt)
   }
+
+  options.validateSchema = !options.validateSchema
+    ? true
+    : toBoolean(options.validateSchema)
 
   return options as SwaggerOptions
 }
@@ -105,26 +113,35 @@ const command: GluegunCommand = {
       process.exit()
     }
 
-    const { path } = options
+    const { path, validateSchema } = options
 
-    const { isValid, details } = await validateSwagger(path)
-    if (!isValid) {
-      print.warning('Your schema has some errors, please check it')
-      console.warn(details)
+    print.info('Validating OpenAPI schema...')
 
-      const { wantToProceed } = await prompt.ask({
-        type: 'confirm',
-        message: ' Do you want to proceed with schema errors?',
-        name: 'wantToProceed',
-        initial: false,
-      })
+    if (validateSchema) {
+      const { isValid, details } = await validateSwagger(path)
+      if (!isValid) {
+        print.warning('Your schema has some errors, please check it')
+        console.warn(details)
 
-      if (!wantToProceed) {
-        process.exit()
+        const { wantToProceed } = await prompt.ask({
+          type: 'confirm',
+          message: ' Do you want to proceed with schema errors?',
+          name: 'wantToProceed',
+          initial: false,
+        })
+        if (!wantToProceed) {
+          process.exit()
+        }
+      } else {
+        print.success('Your schema has no errors.')
       }
     }
 
-    // const document = await SwaggerParser.parse(path)
+    print.info('Starting parsing OpenAPI...')
+
+    const document = await SwaggerParser.parse(path)
+
+    console.log(document)
   },
 }
 

@@ -799,6 +799,11 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
+"@types/to-boolean@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/to-boolean/-/to-boolean-1.0.0.tgz#bce7dd64d2d4dc644d39c69f4cdf62867e1bd5dd"
+  integrity sha512-rKY7I5UUlC3mUjGasRsZyg/ksLqUDQMahpn0QWXA3nxZehZF25rJpbvTB37Vjd61iW3j662L3Iu/WlRdGlDcJQ==
+
 "@types/yargs-parser@*":
   version "21.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
@@ -2782,6 +2787,11 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
+openapi-types@^12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/openapi-types/-/openapi-types-12.0.2.tgz#b752ab0a463c594fd7e3142e0e5983a9645503f6"
+  integrity sha512-GuTo7FyZjOIWVhIhQSWJVaws6A82sWIGyQogxxYBYKZ0NBdyP2CYSIgOwFfSB+UVoPExk/YzFpyYitHS8KVZtA==
+
 optionator@^0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.1.tgz#4f236a6373dae0566a6d43e1326674f50c291499"
@@ -3288,6 +3298,11 @@ tmpl@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
   integrity sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==
+
+to-boolean@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/to-boolean/-/to-boolean-1.0.0.tgz#840653cc95abde6ae7fa259e7d74868a91232e3f"
+  integrity sha512-6BregB7cU5D+BVONyLbjoOd3dZXWDNyz6GFu+WdTzd5YbLcgFdZFstwsSgEmELmjdWy9U5e38q2sYSlFhka/Lw==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
