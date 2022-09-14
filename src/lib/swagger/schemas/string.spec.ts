@@ -19,24 +19,13 @@ describe('[Function] ParseStringSchema', () => {
       },
       {
         type: 'string',
-        example: 12,
-      },
-      {
-        type: 'string',
-        example: false,
-      },
-      {
-        type: 'string',
-        example: {},
+        example: null,
       },
     ])(
       'When informed an string schema with example, should return the prop value $example',
       (schema) => {
-        let want = schema.example
+        const want = schema.example
         const expected = ParseStringSchema(schema)
-
-        want = typeof want !== 'string' ? String(want) : want
-
         expect(expected).toBe(want)
       }
     )
