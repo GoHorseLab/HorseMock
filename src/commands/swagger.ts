@@ -35,6 +35,21 @@ async function getPathOption(prompt: GluegunPrompt): Promise<string> {
   return pathResult.incomingPath
 }
 
+async function getOptions(
+  options: IncomingSwaggerOptions,
+  prompt: GluegunPrompt
+): Promise<SwaggerOptions> {
+  if (!options?.port) {
+    options.port = await getPortOption(prompt)
+  }
+
+  if (!options?.path) {
+    options.path = await getPathOption(prompt)
+  }
+
+  return options as SwaggerOptions
+}
+
 const command: GluegunCommand = {
   name: 'swagger',
   alias: 'sw',
@@ -42,15 +57,7 @@ const command: GluegunCommand = {
   run: async (toolbox) => {
     const { parameters, prompt } = toolbox
 
-    const options = parameters.options as IncomingSwaggerOptions
-
-    if (!options?.port) {
-      options.port = await getPortOption(prompt)
-    }
-
-    if (!options?.path) {
-      options.path = await getPathOption(prompt)
-    }
+    const options = await getOptions(parameters.options, prompt)
 
     console.log(options)
   },
