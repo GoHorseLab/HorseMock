@@ -1,4 +1,11 @@
-import { GluegunCommand, GluegunPrompt } from 'gluegun'
+import {
+  GluegunCommand,
+  GluegunPrompt,
+  GluegunFilesystem,
+  GluegunPrint,
+} from 'gluegun'
+
+import * as SwaggerParser from '@apidevtools/swagger-parser'
 
 type SwaggerOptions = {
   port: number
@@ -50,16 +57,74 @@ async function getOptions(
   return options as SwaggerOptions
 }
 
+async function validateOptions(
+  { path }: SwaggerOptions,
+  fileSystem: GluegunFilesystem,
+  print: GluegunPrint
+) {
+  const isValidPath = await fileSystem.existsAsync(path)
+
+  if (!isValidPath) {
+    print.error('Invalid path, check if file exists or not.')
+    return false
+  }
+
+  const fileInfo = await fileSystem.inspectAsync(path)
+  const isValidFileFormat =
+    fileInfo.type === 'file' &&
+    (fileInfo.name.endsWith('json') || fileInfo.name.endsWith('yaml'))
+
+  if (!isValidFileFormat) {
+    print.error('Invalid file, should be a json or yaml')
+    return false
+  }
+
+  return true
+}
+
+async function validateSwagger(path: string) {
+  try {
+    await SwaggerParser.validate(path)
+    return { isValid: true, details: undefined }
+  } catch (err) {
+    return { isValid: false, details: err?.details }
+  }
+}
+
 const command: GluegunCommand = {
   name: 'swagger',
   alias: 'sw',
   description: 'An API mock base on OpenAPI specification',
   run: async (toolbox) => {
-    const { parameters, prompt } = toolbox
+    const { parameters, prompt, filesystem, print } = toolbox
 
     const options = await getOptions(parameters.options, prompt)
 
-    console.log(options)
+    const isValidOptions = await validateOptions(options, filesystem, print)
+    if (!isValidOptions) {
+      process.exit()
+    }
+
+    const { path } = options
+
+    const { isValid, details } = await validateSwagger(path)
+    if (!isValid) {
+      print.warning('Your schema has some errors, please check it')
+      console.warn(details)
+
+      const { wantToProceed } = await prompt.ask({
+        type: 'confirm',
+        message: ' Do you want to proceed with schema errors?',
+        name: 'wantToProceed',
+        initial: false,
+      })
+
+      if (!wantToProceed) {
+        process.exit()
+      }
+    }
+
+    // const document = await SwaggerParser.parse(path)
   },
 }
 
