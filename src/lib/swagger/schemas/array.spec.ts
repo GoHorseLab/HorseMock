@@ -3,7 +3,7 @@ import { SchemaTypes } from '../enums'
 
 import { ParseArraySchema } from './array'
 
-describe('[Function] ParseBooleanSchema', () => {
+describe('[Function] ParseArraySchema', () => {
   describe('Happy paths', () => {
     it.each([
       {
