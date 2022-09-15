@@ -10,9 +10,10 @@ export type SchemaValue =
 
 export type SchemaObject = {
   type: SchemaTypes | string
-  example?: SchemaValue
-  items?: SchemaObject
   $ref?: string
+  items?: SchemaObject
+  properties?: Record<string, SchemaObject>
+  example?: SchemaValue
 }
 
-export type NullishSchemaValue<T = SchemaPrimitiveValue> = T | null
+export type NullishSchemaValue<T> = T | null
